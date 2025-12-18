@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title id="pageTitle">Dino Math Game</title>
+
+    <style>
+        :root {
+            --primary: #FF8A65;
+            /* Dino Orange */
+            --blue: #4FC3F7;
+            /* Friendly Blue */
+            --green: #AED581;
+            /* Dino Green */
+            --chalk: #FFFFFF;
+            --board: #2E4A3F;
+            /* Blackboard color */
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            font-family: 'Comic Sans MS', 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #A0E7E5, #B4F8C8, #FBE7C6);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ---------------------- Floating Clouds ---------------------- */
+        .cloud {
+            position: absolute;
+            width: 140px;
+            height: 70px;
+            background: white;
+            border-radius: 50px;
+            filter: blur(1px);
+            opacity: 0.7;
+            animation: floatClouds 18s linear infinite;
+        }
+
+        .cloud:nth-child(1) {
+            top: 20px;
+            animation-duration: 22s;
+        }
+
+        .cloud:nth-child(2) {
+            top: 90px;
+            animation-duration: 16s;
+            width: 170px;
+        }
+
+        .cloud:nth-child(3) {
+            top: 160px;
+            animation-duration: 20s;
+            width: 150px;
+        }
+
+        @keyframes floatClouds {
+            from {
+                transform: translateX(-200px);
+            }
+
+            to {
+                transform: translateX(120vw);
+            }
+        }
+
+        /* ---------------------- Card ---------------------- */
+        .card {
+            max-width: 700px;
+            background: var(--board);
+            margin: 150px auto 50px;
+            /* push down for clouds */
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 8px solid #F9FBE7;
+            color: var(--chalk);
+            text-align: center;
+            animation: popIn 0.8s ease;
+            position: relative;
+            z-index: 1;
+            /* above clouds */
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ---------------------- Title ---------------------- */
+        .title {
+            font-size: 50px;
+            font-weight: 900;
+            margin-bottom: 25px;
+            color: #FFEB3B;
+            text-shadow: 4px 4px 0 #8BC34A;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ---------------------- Top Info ---------------------- */
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 25px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        /* ---------------------- Question Box ---------------------- */
+        #questionText {
+            background: #3E5C50;
+            padding: 20px;
+            border-radius: 25px;
+            font-size: 42px;
+            font-weight: 900;
+            margin: 30px 0;
+            color: #FFEB3B;
+            text-shadow: 2px 2px 0 #000;
+            border: 5px dashed #A5D6A7;
+        }
+
+        /* ---------------------- Input ---------------------- */
+        #answerInput {
+            width: 100%;
+            padding: 20px;
+            border-radius: 30px;
+            border: 5px solid var(--primary);
+            font-size: 30px;
+            font-weight: 900;
+            text-align: center;
+            background: #FFFDE7;
+            margin-bottom: 20px;
+            color: #543000;
+        }
+
+        /* ---------------------- Submit Button ---------------------- */
+        #submitBtn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #4FC3F7, #29B6F6);
+            border: none;
+            border-radius: 35px;
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: 0.15s;
+        }
+
+        #submitBtn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ---------------------- Feedback ---------------------- */
+        #feedbackText {
+            height: 50px;
+            font-size: 26px;
+            font-weight: 900;
+            margin-top: 10px;
+        }
+
+        /* ---------------------- Home Button ---------------------- */
+        .home-btn {
+            display: block;
+            margin-top: 28px;
+            padding: 12px 25px;
+            background: #81D4FA;
+            color: #004D40;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 24px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 900;
+            box-shadow: var(--shadow);
+        }
+
+        .home-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* ---------------------- Dino Sticker ---------------------- */
+        .dino {
+            width: 120px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            animation: dinoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes dinoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Clouds -->
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+
+    <!-- Dino Sticker -->
+    <img class="dino" src="https://i.imgur.com/kq2m8C8.png" alt="Dino">
+
+    <!-- Main Card -->
+    <div class="card">
+        <div class="title">🦖 Dino Math Fun!</div>
+
+        <div class="question-header">
+            <div>Mode: <span id="currentMode">Loading...</span></div>
+            <div>Score: <span id="score">0</span> / <span id="totalQuestions">10</span></div>
+        </div>
+
+        <div id="questionText">Loading Question...</div>
+
+        <input inputmode="numeric" id="answerInput" placeholder="Enter answer..." />
+        <button id="submitBtn">Submit Answer</button>
+
+        <div id="feedbackText"></div>
+
+        <a href="Math.html" class="home-btn">🏡 Back to Menu</a>
+    </div>
+
+
+
+    <script>
+// ----------- GAME MODE ----------
+function getGameMode() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('mode') || 'addition';
+}
+
+// ----------- GLOBAL STATE ----------
+let gameMode = getGameMode();
+let score = 0;
+let currentQuestionIndex = 0;
+let totalQuestions = 10;
+let maxNumber = 20;
+let currentAnswer = null;
+
+let startTime = Date.now();        // Total gameplay time tracker
+let questionStartTime = Date.now(); // Timer per question (<20 sec star rule)
+let totalStars = 0;                // Stars earned by fast answers
+
+// ----------- DOM ELEMENTS ----------
+const modeDisplay = document.getElementById('currentMode');
+const questionText = document.getElementById('questionText');
+const answerInput = document.getElementById('answerInput');
+const submitBtn = document.getElementById('submitBtn');
+const feedbackText = document.getElementById('feedbackText');
+const scoreDisplay = document.getElementById('score');
+const totalQuestionsDisplay = document.getElementById('totalQuestions');
+const pageTitle = document.getElementById('pageTitle');
+
+// ----------- UTILITY ----------
+function rnd(n) { return Math.floor(Math.random() * n) + 1; }
+
+// ----------- QUESTION GENERATOR ----------
+function generateQuestion() {
+    let q = { text: '', answer: 0 };
+
+    if (gameMode === 'addition') {
+        const a = rnd(maxNumber);
+        const b = rnd(maxNumber);
+        q.text = `What is ${a} + ${b}?`;
+        q.answer = a + b;
+
+    } else if (gameMode === 'subtraction') {
+        let a = rnd(maxNumber);
+        let b = rnd(maxNumber);
+        if (b > a) [a, b] = [b, a];
+        q.text = `What is ${a} - ${b}?`;
+        q.answer = a - b;
+
+    } else if (gameMode === 'multiplication') {
+        const a = rnd(12);
+        const b = rnd(12);
+        q.text = `What is ${a} x ${b}?`;
+        q.answer = a * b;
+
+    } else if (gameMode === 'word') {
+        const items = ['apples', 'candies', 'balls', 'pencils'];
+        const item = items[Math.floor(Math.random() * items.length)];
+        const a = rnd(10);
+        const b = rnd(10);
+
+        if (Math.random() > 0.5) {
+            q.text = `Anna has ${a} ${item}. She gets ${b} more. How many does she have now?`;
+            q.answer = a + b;
+        } else {
+            let N1 = Math.max(a, b + 1);
+            let N2 = Math.min(a, b);
+            q.text = `Ben had ${N1} ${item}. He gave away ${N2}. How many are left?`;
+            q.answer = N1 - N2;
+        }
+    }
+
+    return q;
+}
+
+// ----------- NEXT QUESTION ----------
+function nextQuestion() {
+    if (currentQuestionIndex >= totalQuestions) {
+        gameOver();
+        return;
+    }
+
+    currentQuestionIndex++;
+
+    const q = generateQuestion();
+    currentAnswer = q.answer;
+
+    questionText.textContent = q.text;
+    answerInput.value = "";
+    feedbackText.textContent = "";
+
+    scoreDisplay.textContent = score;
+
+    // Reset per-question timer
+    questionStartTime = Date.now();
+
+    // Animation reset
+    questionText.classList.remove("bounce");
+    void questionText.offsetWidth;
+    questionText.classList.add("bounce");
+}
+
+// ----------- SUBMIT ANSWER ----------
+function submitAnswer() {
+    const userAnswer = parseInt(answerInput.value);
+
+    if (isNaN(userAnswer)) {
+        feedbackText.style.color = "orange";
+        feedbackText.textContent = "Please enter a number.";
+        return;
+    }
+
+    // Measure time used for this question
+    const timeTaken = (Date.now() - questionStartTime) / 1000;
+    let earnedStar = 0;
+
+    if (timeTaken <= 20) earnedStar = 1; // ⭐ fast answer star
+
+    if (userAnswer === currentAnswer) {
+        score++;
+
+        if (earnedStar == 1) {
+            feedbackText.style.color = "green";
+            feedbackText.textContent = "Correct! ⭐ Fast Answer Bonus!";
+        } else {
+            feedbackText.style.color = "green";
+            feedbackText.textContent = "Correct!";
+        }
+
+    } else {
+        earnedStar = 0; // No star if wrong
+        feedbackText.style.color = "red";
+        feedbackText.textContent = `Wrong! Answer: ${currentAnswer}`;
+    }
+
+    // Add earned star
+    totalStars += earnedStar;
+
+    submitBtn.disabled = true;
+    setTimeout(() => {
+        submitBtn.disabled = false;
+        nextQuestion();
+    }, 1000);
+}
+
+// ----------- GAME OVER ----------
+function gameOver() {
+    const timeUsed = Math.floor((Date.now() - startTime) / 1000);
+
+    questionText.textContent = `🎉 Game Over! Score: ${score}/${totalQuestions}`;
+    answerInput.disabled = true;
+    submitBtn.disabled = true;
+
+    saveProgress(score, timeUsed, totalStars);
+}
+
+// ----------- SAVE TO LOCAL STORAGE ----------
+function saveProgress(score, timeUsed, starsEarned) {
+
+    const data = {
+        mode: gameMode,
+        score: score,
+        totalQuestions: totalQuestions,
+        stars: starsEarned,
+        timeUsed: timeUsed,
+        date: new Date().toLocaleString()
+    };
+
+    // Save to LocalStorage
+    localStorage.setItem("dinoMathScore", JSON.stringify(data));
+
+    // Go to scoreboard
+    window.location.href = "Scoreboard.html";
+}
+
+// ----------- INIT GAME ----------
+function initGame() {
+    modeDisplay.textContent = gameMode.toUpperCase();
+    totalQuestionsDisplay.textContent = totalQuestions;
+
+    nextQuestion();
+
+    submitBtn.addEventListener("click", submitAnswer);
+    answerInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") submitAnswer();
+    });
+}
+
+initGame();
+</script>
+    
+</body>
+
+</html>

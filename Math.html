@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Peekaboo Dino Math — Tropical Menu</title>
+  <style>
+    :root {
+      /* Enhanced Tropical Colors for a more vibrant look */
+      --sky: #81D4FA;
+      --sand: #FFB74D;
+      --water: #4FC3F7;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      /* Slightly more opaque for better contrast */
+      --primary: #FF7043;
+      /* Bright Orange */
+      --menu-card-bg: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%);
+      /* Subtle gradient for depth */
+      --title-banner: linear-gradient(135deg, #CBA4FF 0%, #A78BFA 100%);
+      /* Gradient for title */
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      --text-dark: #3E2723;
+      font-family: 'Poppins', 'Comic Sans MS', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-image: url(Photo/background/mathBg.png);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--text-dark);
+    }
+
+    .wrap {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* --- TOP TITLE BANNER --- */
+    .title-banner-wrap {
+      margin-bottom: 30px;
+      position: relative;
+      text-align: center;
+      padding: 10px 40px;
+      background: var(--title-banner);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 4px solid #fff;
+      font-size: 30px;
+      font-weight: 900;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0px #9A6FDE;
+    }
+
+    /* Simple 'ribbon' effect */
+    .title-banner-wrap:before,
+    .title-banner-wrap:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 30px;
+      height: 100%;
+      background: inherit;
+      z-index: -1;
+    }
+
+    .title-banner-wrap:before {
+      left: -15px;
+      transform: skewX(15deg);
+      border-radius: 0 0 0 15px;
+    }
+
+    .title-banner-wrap:after {
+      right: -15px;
+      transform: skewX(-15deg);
+      border-radius: 0 0 15px 0;
+    }
+
+
+    /* --- MAIN CARD/CONTAINER --- */
+    .card {
+      width: 100%;
+      max-width: 1000px;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- LEFT SIDE (Controls/Modes) --- */
+    .left {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      width: 100%;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    .menu-content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      /* Spacing between grid and button */
+      width: 100%;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    .modes {
+      /* Grid is now applied to this container's parent in the HTML structure below */
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+
+    /* Hide non-menu items */
+    .logo,
+    .settings,
+    .start-row,
+    .footer {
+      display: none;
+    }
+
+    .mode-btn {
+      background: var(--menu-card-bg);
+      border: 4px solid var(--primary);
+      padding: 15px;
+      height: 160px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      /* Smoother transition */
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      /* Center content vertically and horizontally */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      /* For potential inner effects */
+    }
+
+    .mode-btn:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: var(--water);
+      /* Subtle color shift on hover */
+    }
+
+    .mode-btn.active {
+      border-color: var(--title-banner);
+      box-shadow: 0 10px 20px rgba(130, 80, 200, 0.4);
+      background: linear-gradient(135deg, #FFFFFF 0%, #E8F5E8 100%);
+      /* Light green tint for active */
+    }
+
+    .mode-icon1 {
+      font-size: 40px;
+
+      height: 285px;
+      display: flex;
+
+      justify-content: center;
+    }
+
+    .mode-icon2 {
+      font-size: 40px;
+
+      height: 235px;
+      display: flex;
+
+      justify-content: center;
+    }
+
+    .mode-icon3 {
+      background: url(Photo/mathBg/MultiplyingFun.png);
+      font-size: 40px;
+
+      height: 162px;
+      display: flex;
+
+      justify-content: center;
+    }
+
+    .mode-icon4 {
+      font-size: 40px;
+
+      height: 190px;
+      display: flex;
+
+      justify-content: center;
+    }
+
+    .mode-icon5 {
+      font-size: 40px;
+
+      height: 165px;
+      display: flex;
+
+      justify-content: center;
+    }
+
+    .mode-icon img {
+      max-width: 100%;
+      /* Ensure images scale properly */
+      max-height: 100%;
+      object-fit: contain;
+      /* Maintain aspect ratio */
+    }
+
+    /* --- NEW HOME BUTTON STYLE --- */
+    .home-btn {
+      display: block;
+      margin-top: 10px;
+      /* Reduced margin since gap handles spacing */
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #B0BEC5 0%, #90A4AE 100%);
+      /* Gradient for depth */
+      color: #455A64;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 18px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      /* Smoother transition */
+    }
+
+    .home-btn:hover {
+      background: linear-gradient(135deg, #90A4AE 0%, #78909C 100%);
+      transform: scale(1.02);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* RIGHT SIDE (Game Board) - Hidden */
+    .right {
+      display: none;
+    }
+
+    /* Mobile adjustments */
+
+    @media(max-width:860px) {
+      .modes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .mode-btn {
+        height: 140px;
+      }
+
+      .title-banner-wrap {
+        font-size: 24px;
+        padding: 8px 30px;
+      }
+
+      .mode-icon1 {
+        height: 220px;
+
+      }
+
+      .mode-icon2 {
+        height: 180px;
+      }
+
+      .mode-icon3 {
+        height: 130px;
+      }
+
+      .mode-icon4 {
+        height: 150px;
+      }
+
+      .mode-icon5 {
+        height: 130px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="title-banner-wrap">
+      Math Modes
+    </div>
+
+    <div class="card" role="application">
+      <div class="menu-content-area">
+        <div class="modes" role="navigation" aria-label="Game modes">
+
+          <a class="mode-btn active" href="game.html?mode=addition">
+            <div class="mode-icon1"><img src="Photo/mathBg/AdditionFun.png">
+            </div>
+          </a>
+
+          <a class="mode-btn" href="game.html?mode=subtraction">
+            <div class="mode-icon2"><img src="Photo/mathBg/SubtractionSkill.png"
+                ></div>
+          </a>
+
+          <a class="mode-btn" href="game.html?mode=multiplication">
+            <div class="mode-icon3"><img src="Photo/mathBg/MultiplyingFun.png"></div>
+          </a>
+
+          <a class="mode-btn" href="game.html?mode=word">
+            <div class="mode-icon4"><img src="Photo/mathBg/WordProblem.png">
+            </div>
+          </a>
+
+          <a class="mode-btn" href="game.html?mode=tables">
+            <div class="mode-icon5"><img src="Photo/mathBg/TimesTables.png">
+            </div>
+          </a>
+        </div>
+
+        <a href="index.html" class="home-btn">🏠 Back to Menu</a>
+
+      </div>
+
+      <div class="left" style="display:none;"></div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

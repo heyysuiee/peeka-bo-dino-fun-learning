@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login & Register ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            /* Background Image Setup */
+            background-image: url('photo/background/regisbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #fdf2f8; /* Fallback color */
+            
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Floating Bubble Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .container {
+            /* Glassmorphism / Bubble Effect */
+            background: rgba(255, 255, 255, 0.35); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            
+            padding: 2.5rem;
+            border-radius: 40px; /* Rounded like a bubble */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            
+            /* Animation triggers */
+            animation: float 5s ease-in-out infinite;
+            transition: 0.4s;
+        }
+
+        .container:hover {
+            background: rgba(255, 255, 255, 0.45);
+            transform: scale(1.02);
+        }
+
+        .form-box h2 { 
+            color: #ff8fab; 
+            margin-bottom: 5px; 
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .form-box p { 
+            color: #555; 
+            font-size: 14px; 
+            margin-bottom: 20px; 
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            /* Transparent Inputs */
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        input:focus { 
+            border-color: #ff8fab; 
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(255, 143, 171, 0.3);
+        }
+
+        button {
+            background: #ff8fab;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+            width: 100%;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 143, 171, 0.4);
+        }
+
+        button:hover { 
+            background: #fb6f92; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 143, 171, 0.6);
+        }
+
+        .toggle-text { 
+            cursor: pointer; 
+            margin-top: 20px; 
+            font-size: 13px; 
+            color: #444;
+        }
+
+        .toggle-text span { 
+            color: #ff8fab; 
+            font-weight: bold; 
+            text-decoration: underline; 
+        }
+
+        .hidden { display: none; }
+
+        /* Para sa mobile users */
+        @media (max-width: 400px) {
+            .container { width: 85%; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-box" id="login-box">
+            <h2>Login</h2>
+            <p>Welcome back! Please login to your account.</p>
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button onclick="handleLogin()">Login</button>
+            <p class="toggle-text">Don't have an account? <span onclick="toggleForms()">Register here</span></p>
+        </div>
+
+        <!-- Register Form -->
+        <div class="form-box hidden" id="register-box">
+            <h2>Register</h2>
+            <p>Create a new account.</p>
+            <input type="text" id="reg-username" placeholder="Username" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
+            <input type="password" id="reg-password" placeholder="Password" required>
+            <button onclick="handleRegister()">Register</button>
+            <p class="toggle-text">Already have an account? <span onclick="toggleForms()">Login here</span></p>
+        </div>
+    </div>
+
+    
+   <script>
+function toggleForms() {
+    document.getElementById('login-box').classList.toggle('hidden');
+    document.getElementById('register-box').classList.toggle('hidden');
+}
+
+function handleRegister() {
+    const username = document.getElementById('reg-username').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value.trim();
+
+    if (!username || !email || !password) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    if (!email.toLowerCase().endsWith("@gmail.com")) {
+        alert("Please use a valid Gmail address.");
+        return;
+    }
+
+    if (password.length <= 5) {
+        alert("Password must be longer than 5 characters.");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    if (users.find(u => u.email === email)) {
+        alert("Email is already registered.");
+        return;
+    }
+
+    const newUser = { username, email, password };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    window.location.href = "index.html";
+}
+
+function handleLogin() {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+
+    if (!username || !password) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const matchedUser = users.find(u => u.username === username && u.password === password);
+
+    if (matchedUser) {
+        localStorage.setItem('currentUser', JSON.stringify(matchedUser));
+       
+        window.location.href = "index.html";
+    } else {
+        alert("Invalid username or password.");
+    }
+}
+</script>
+</body>
+
+</html>
