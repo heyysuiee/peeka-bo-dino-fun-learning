@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Learning</title>
+
+    <style>
+        :root {
+            --dino-green: #4CAF50;
+            --sunny-yellow: #FFEB3B;
+            --accent-red: #F44336;
+            --primary-text: #333333;
+            --white-bg: #FFFFFF;
+            --button-shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: var(--white-bg);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .responsive-bg-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("photo/background/alphabetBg.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .content-area {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            text-align: center;
+            /* Changed flex direction to keep the button at the bottom of the content */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Added space-between to push the last element (button) to the bottom */
+            justify-content: space-between;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        /* --- Updated Home Button Styles (Moved to bottom) --- */
+        .home-button {
+            text-decoration: none;
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: bold;
+            color: var(--white-bg);
+            background-color: var(--dino-green);
+            border: 4px solid var(--sunny-yellow);
+            padding: 8px 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            /* Space above the button (now at the bottom) */
+            display: inline-block;
+            box-shadow: 0 4px 0 0 var(--accent-red),
+                0 8px 12px var(--button-shadow);
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .home-button:hover {
+            transform: translateY(-1px) scale(1.02);
+            background-color: var(--accent-red);
+            border-color: var(--dino-green);
+            box-shadow: 0 5px 0 0 var(--dino-green),
+                0 10px 15px var(--button-shadow);
+        }
+
+        .home-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 0 var(--accent-red),
+                0 3px 5px var(--button-shadow);
+        }
+
+        /* --- End Home Button Styles --- */
+
+        /* New container for title and alphabet to keep them grouped */
+        .top-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .page-title {
+            font-size: clamp(40px, 8vw, 70px);
+            font-weight: 900;
+            margin: 0 0 20px;
+            color: var(--dino-green);
+            text-shadow:
+                3px 3px 0 var(--sunny-yellow),
+                6px 6px 0 var(--accent-red);
+            animation: titleBounce 2s infinite;
+        }
+         @keyframes titleBounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        .alphabet-flex {
+            width: 98%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+             box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.4),0 5px 15px rgba(0, 0, 0, 0.2);
+
+            
+        }
+
+        .alphabet-flex img {
+            width: 220px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            user-select: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+
+        .alphabet-flex img:hover {
+            transform: scale(1.12);
+           
+        }
+
+
+        @media (max-width: 480px) {
+            .home-button {
+                margin-top: 15px;
+            }
+
+            .page-title {
+                font-size: 8vw;
+                margin-bottom: 10px;
+            }
+
+            .alphabet-flex {
+                gap: 5px;
+                padding: 0 5px;
+            }
+
+            .alphabet-flex img {
+                width: 30%;
+                min-width: 65px;
+            }
+
+            .content-area {
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+        }
+
+        @media (max-height: 390px) {
+            .home-button {
+                margin-top: 10px;
+                padding: 6px 15px;
+            }
+
+            .page-title {
+                font-size: 6vw;
+                margin-bottom: 5px;
+            }
+
+            .alphabet-flex {
+                gap: 5px;
+            }
+
+            .alphabet-flex img {
+                width: clamp(40px, 8vw, 80px);
+            }
+
+            .content-area {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                min-height: auto;
+                /* Ensures content flows nicely without space-between pushing elements too far apart */
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="responsive-bg-container">
+        <div class="content-area">
+
+            <div class="top-content">
+                <h1 class="page-title">Alphabet Learning</h1>
+
+                <div class="alphabet-flex">
+                    <img src="Photo/Alphabet/A.png" id="A" alt="Letter A">
+                    <img src="Photo/Alphabet/B.png" id="B" alt="Letter B">
+                    <img src="Photo/Alphabet/C.png" id="C" alt="Letter C">
+                    <img src="Photo/Alphabet/D.png" id="D" alt="Letter D">
+                    <img src="Photo/Alphabet/E.png" id="E" alt="Letter E">
+                    <img src="Photo/Alphabet/F.png" id="F" alt="Letter F">
+                    <img src="Photo/Alphabet/G.png" id="G" alt="Letter G">
+                    <img src="Photo/Alphabet/H.png" id="H" alt="Letter H">
+                    <img src="Photo/Alphabet/I.png" id="I" alt="Letter I">
+                    <img src="Photo/Alphabet/J.png" id="J" alt="Letter J">
+                    <img src="Photo/Alphabet/K.png" id="K" alt="Letter K">
+                    <img src="Photo/Alphabet/L.png" id="L" alt="Letter L">
+                    <img src="Photo/Alphabet/M.png" id="M" alt="Letter M">
+                    <img src="Photo/Alphabet/N.png" id="N" alt="Letter N">
+                    <img src="Photo/Alphabet/O.png" id="O" alt="Letter O">
+                    <img src="Photo/Alphabet/P.png" id="P" alt="Letter P">
+                    <img src="Photo/Alphabet/Q.png" id="Q" alt="Letter Q">
+                    <img src="Photo/Alphabet/R.png" id="R" alt="Letter R">
+                    <img src="Photo/Alphabet/S.png" id="S" alt="Letter S">
+                    <img src="Photo/Alphabet/T.png" id="T" alt="Letter T">
+                    <img src="Photo/Alphabet/U.png" id="U" alt="Letter U">
+                    <img src="Photo/Alphabet/V.png" id="V" alt="Letter V">
+                    <img src="Photo/Alphabet/W.png" id="W" alt="Letter W">
+                    <img src="Photo/Alphabet/X.png" id="X" alt="Letter X">
+                    <img src="Photo/Alphabet/Y.png" id="Y" alt="Letter Y">
+                    <img src="Photo/Alphabet/Z.png" id="Z" alt="Letter Z">
+                </div>
+            </div>
+
+            <a href="index.html" class="home-button">🏠 Back to Home</a>
+
+        </div>
+    </section>
+
+   <script>
+    let currentAudio = null; // <-- Ito yung nagho-hold ng currently playing audio
+
+    function setupAudioListener(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener("click", () => {
+
+            // Stop current audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0; // balik simula
+            }
+
+            // Play new audio
+            currentAudio = new Audio(`sound/${id}.mp3`);
+            currentAudio.play().catch(error => {
+                console.error("Error playing audio. Check if file exists:", `sound/${id}.mp3`, error);
+            });
+        });
+    }
+
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(setupAudioListener);
+
+    
+</script>
+
+
+</body>
+
+</html>

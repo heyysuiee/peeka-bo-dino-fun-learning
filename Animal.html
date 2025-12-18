@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Sound Learning</title>
+
+    <style>
+        :root {
+            --sky-blue: #03A9F4;
+            /* Primary background color */
+            --grass-green: #8BC34A;
+            /* Accent color 1 */
+            --earth-brown: #795548;
+            /* Text/Shadow color */
+            --sunshine-yellow: #FFEB3B;
+            /* Accent color 2 */
+            --white-bg: #FFFFFF;
+            --button-shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: var(--white-bg);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Responsive Background Container */
+        .Animal-content {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("Photo/background/animalBg.png");
+            /* Use your specified image */
+            background-size: cover;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            padding-top: 30px;
+            padding-bottom: 30px;
+
+
+        }
+
+        .container h1 {
+            animation: titleBounce 2s infinite;
+        }
+
+        @keyframes titleBounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Container to group title and animal images */
+        .content-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* 🦁 Page Title Styling */
+        h1 {
+            font-size: clamp(40px, 8vw, 70px);
+            font-weight: 900;
+            margin: 0 0 30px;
+            color: var(--earth-brown);
+            text-shadow:
+                3px 3px 0 var(--sunshine-yellow),
+                6px 6px 0 var(--grass-green);
+        }
+
+        /* 🖼️ Animal Grid Flexbox */
+        .animal-img {
+            width: 98%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+
+        /* Animal Image Sizing and Hover Effect */
+        .animal-img img {
+            /* Large, responsive size for engagement */
+            width: clamp(100px, 25vw, 225px);
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            user-select: none;
+            border-radius: 15px;
+            /* Rounded corners for a friendly look */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+
+        .animal-img img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- 🏠 Home Button Styles --- */
+        .home-button {
+            text-decoration: none;
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: bold;
+            color: var(--white-bg);
+            background-color: var(--sky-blue);
+            border: 4px solid var(--sunshine-yellow);
+            padding: 8px 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: inline-block;
+            box-shadow: 0 4px 0 0 var(--grass-green),
+                0 8px 12px var(--button-shadow);
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .home-button:hover {
+            transform: translateY(-1px) scale(1.02);
+            background-color: var(--grass-green);
+            border-color: var(--sky-blue);
+            box-shadow: 0 5px 0 0 var(--sky-blue),
+                0 10px 15px var(--button-shadow);
+        }
+
+        .home-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 0 var(--grass-green),
+                0 3px 5px var(--button-shadow);
+        }
+
+        /* 📱 Mobile & Small Screen Optimizations */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 10vw;
+                margin-bottom: 20px;
+            }
+
+            .animal-img {
+                gap: 10px;
+            }
+
+            .animal-img img {
+                width: clamp(80px, 28vw, 150px);
+                /* 3 images per row */
+            }
+        }
+
+        .animal-img img {
+
+            border-radius: 15px;
+
+            box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+
+        .animal-img img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.3);
+
+        }
+
+        /* ⛰️ Landscape Mobile/Short Height Optimizations */
+        @media (max-height: 450px) {
+            .container {
+                padding: 10px;
+                justify-content: flex-start;
+                /* Prevent stretching */
+                min-height: auto;
+            }
+
+            h1 {
+                font-size: 6vw;
+                margin-bottom: 10px;
+            }
+
+            .animal-img {
+                gap: 5px;
+            }
+
+            .animal-img img {
+                width: clamp(60px, 12vw, 120px);
+                /* Smaller images to fit more rows */
+            }
+
+            .home-button {
+                margin-top: 10px;
+                padding: 5px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="Animal-content">
+        <div class="container">
+
+            <div class="content-group">
+                <div class="content">
+                    <h1>
+                        Animal Sound Learning
+                    </h1>
+                </div>
+
+                <div class="animal-img">
+                    <img src="Photo/Animal/Dog.png" alt="Dog" id="Dog">
+                    <img src="Photo/Animal/Bee.png" alt="Bee" id="Bee">
+                    <img src="Photo/Animal/Bird.png" alt="Bird" id="Bird">
+                    <img src="Photo/Animal/Cat.png" alt="Cat" id="Cat">
+                    <img src="Photo/Animal/Cow.png" alt="Cow" id="Cow">
+                    <img src="Photo/Animal/Chicken.png" alt="Chicken" id="Chicken">
+                    <img src="Photo/Animal/Frog.png" alt="Frog" id="Frog">
+                    <img src="Photo/Animal/Horse.png" alt="Horse" id="Horse">
+                    <img src="Photo/Animal/Lion.png" alt="Lion" id="Lion">
+                    <img src="Photo/Animal/Monkey.png" alt="Monkey" id="Monkey">
+                    <img src="Photo/Animal/Owl.png" alt="Owl" id="Owl">
+                    <img src="Photo/Animal/pig.png" alt="Pig" id="Pig">
+                    <img src="Photo/Animal/Sheep.png" alt="Sheep" id="Sheep">
+                    <img src="Photo/Animal/Snake.png" alt="Snake" id="Snake">
+                    <img src="Photo/Animal/Wolf.png" alt="Wolf" id="Wolf">
+                    <img src="Photo/Animal/whale.png" alt="whale" id="Whale">
+                </div>
+            </div>
+
+            <a href="index.html" class="home-button">🏠 Back to Home</a>
+
+        </div>
+    </section>
+   <script>
+    let currentAudio = null;
+
+    function setupAudioListener(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener("click", () => {
+
+            // Stop current audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            // Play new audio
+            currentAudio = new Audio(`anisound/${id}.mp3`);
+            currentAudio.play().catch(error => {
+                console.error("Error playing audio. Check if file exists:", `anisound/${id}.mp3`, error);
+            });
+        });
+    }
+
+    // ALL animal IDs
+    const animals = [
+        "Dog", "Bee", "Bird", "Cat", "Cow", "Chicken",
+        "Frog", "Horse", "Lion", "Monkey", "Owl",
+        "Pig", "Sheep", "Snake", "Wolf", "Whale"
+    ];
+
+    animals.forEach(setupAudioListener);
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Scoreboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #F4FFE2;
+            text-align: center;
+        }
+
+        .scoreboard-box {
+            margin: 40px auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 550px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 35px;
+        }
+
+        .label {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .value {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            font-size: 45px;
+            color: gold;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 15px;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #3b8f3c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scoreboard-box">
+        <h1>🏆 Dino Math Scoreboard</h1>
+
+        <div class="label">Mode:</div>
+        <div id="mode" class="value"></div>
+
+        <div class="label">Score:</div>
+        <div id="score" class="value"></div>
+
+        <div class="label">Stars Earned:</div>
+        <div id="stars" class="stars"></div>
+
+        <div class="label">Time Used:</div>
+        <div id="time" class="value"></div>
+
+        <div class="label">Date:</div>
+        <div id="date" class="value"></div>
+        
+
+        <a href="index.html" class="btn">🏠 Back to Home</a>
+    </div>
+
+
+    <script>
+        // Load saved data from game.js
+        const saved = JSON.parse(localStorage.getItem("dinoMathScore"));
+
+        if (saved) {
+            document.getElementById("mode").textContent = saved.mode.toUpperCase();
+            document.getElementById("score").textContent = `${saved.score} / ${saved.totalQuestions}`;
+
+            // Show star icons ⭐
+            let starIcons = "";
+            for (let i = 0; i < saved.stars; i++) starIcons += "⭐";
+            document.getElementById("stars").textContent = starIcons || "No Stars";
+
+            // Time
+            document.getElementById("time").textContent = saved.timeUsed + " sec";
+
+            // Date
+            document.getElementById("date").textContent = saved.date;
+        } else {
+            document.querySelector(".scoreboard-box").innerHTML = `
+            <h1>No Score Found 😢</h1>
+            <a href="index.html" class="btn">Go Back</a>
+        `;
+        }
+    </script>
+
+</body>
+
+</html>
